@@ -20,19 +20,12 @@ namespace Rebar.Models
         [BsonElement("priceForSize")]
         public PriceForSize PriceForSize { get; set; }
     }
-        public record PriceForSize
-        {
-            public double Large { get; init; }
-            public double Medium { get; init; }
-            public double Small { get; init; }
+    public record PriceForSize
+    {
+        public int Large { get; init; }
+        public int Medium { get; init; }
+        public int Small { get; init; }
 
-            public PriceForSize(double small, double medium, double large)
-            {
-                Small = small;
-                Medium = medium;
-                Large = large;
-            }
-
-        }
+    }
     }
 

@@ -23,5 +23,7 @@ namespace Rebar.Models
 
         [BsonElement("listShakes")]
         public List<Shake> ListShakes { get; set; }
+        //enum
+        //אפשר למחוק את המחלקה עצמה ולעשות אינם להחזיר אותו לטבלה כמחרוזת
     }
 }
