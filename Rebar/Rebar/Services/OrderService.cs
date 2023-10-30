@@ -8,40 +8,38 @@ namespace Rebar.Services
 
         private readonly IMongoCollection<Shake> _shake;
         //פה נעשה 2 סוגיפ של גם שייק וגם הנחות ומבצעים
+        //private readonly 
 
         public OrderService(IRebarStoreDatabaseSettings settings, IMongoClient mongoClient)
         {
             var database = mongoClient.GetDatabase(settings.DatabaseName);
             _shake = database.GetCollection<Shake>(settings.OrderCollectionName);
         }
-        public DiscountsAndPromotions CreateDiscountsAndPromotions(DiscountsAndPromotions discountsAndPromotions)
-        {
-            throw new NotImplementedException();
-        }
 
         public Shake CreateShakeInOrder(Shake shake)
         {
-            throw new NotImplementedException();
+           _shake.InsertOne(shake);
+            return shake;
         }
 
         public void DeleteShake(Guid id)
         {
-            throw new NotImplementedException();
+            _shake.DeleteOne(shake => shake.Id == id);
         }
 
-        public List<DiscountsAndPromotions> GetAll()
-        {
-            throw new NotImplementedException();
-        }
+        //public DiscountsAndPromotions GetDiscountsAndPromotions()
+        //{
+        // //   return _.Find(shakes => true).ToList();
+        //}
 
         public Shake GetShakeById(Guid shakeId)
         {
-            throw new NotImplementedException();
+            return _shake.Find(shake => shake.Id == shakeId).FirstOrDefault();
         }
 
         public List<Shake> GetShakes()
         {
-            throw new NotImplementedException();
+            return _shake.Find(shakes => true).ToList();
         }
 
         public void UpdateOrderShake(Guid id, Shake shake)

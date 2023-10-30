@@ -4,9 +4,11 @@ namespace Rebar.Services
 {
     public interface IOrderService
     {
-        List<DiscountsAndPromotions> GetAll();
-        DiscountsAndPromotions CreateDiscountsAndPromotions(DiscountsAndPromotions discountsAndPromotions);
-        //void DeleteDiscountsAndPromotions()
+
+
+        //DiscountsAndPromotions GetDiscountsAndPromotions();
+
+      //  DiscountsAndPromotions CreateDiscountsAndPromotions(DiscountsAndPromotions discountsAndPromotions);
         List<Shake> GetShakes();
         Shake GetShakeById(Guid shakeId);
         Shake CreateShakeInOrder(Shake shake);

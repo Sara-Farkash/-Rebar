@@ -1,7 +1,18 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+
+public enum DiscountsAndPromotions
+{
+    soldier = 30,
+    teacher = 30,
+    disabled = 42,
+    student = 13,
+    stateEmployee = 24,
+    club = 15
+}
 namespace Rebar.Models
 {
+
     [BsonIgnoreExtraElements]
     public class Order
     {
@@ -16,7 +27,7 @@ namespace Rebar.Models
         public DateTime DateOrder { get; set; }
 
         [BsonElement("listOfDiscountsAndPromotions")]
-        public List< DiscountsAndPromotions> ListOfDiscountsAndPromotions  { get; set; }
+        public DiscountsAndPromotions DiscountsAndPromotionsForPerson { get; set; }
 
         [BsonElement("sumPriceShakeInList")]
         public double SumPriceShakeInList { get; set; }
