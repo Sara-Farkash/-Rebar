@@ -2,6 +2,7 @@
 using MongoDB.Bson.Serialization.Attributes;
 namespace Rebar.Models
 {
+    [BsonIgnoreExtraElements]
     public class Account
     {
         [BsonId]
@@ -13,5 +14,6 @@ namespace Rebar.Models
 
         [BsonElement("listOrders")]
         public List<Order> ListOrders { get; set; }
+    
     }
 }

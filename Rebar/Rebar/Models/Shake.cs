@@ -1,11 +1,10 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using System;
 namespace Rebar.Models
 {
-    public enum EnumPriceForSize
-    {
-        L=32,M=28,S=23
-    }
+
+    [BsonIgnoreExtraElements]
     public class Shake
     {
         [BsonId]
@@ -19,10 +18,21 @@ namespace Rebar.Models
         public string Description { get; set; }
 
         [BsonElement("priceForSize")]
-        public EnumPriceForSize PriceForSize { get; set; }
-
-
-
-
+        public PriceForSize PriceForSize { get; set; }
     }
-}
+        public record PriceForSize
+        {
+            public double Large { get; init; }
+            public double Medium { get; init; }
+            public double Small { get; init; }
+
+            public PriceForSize(double small, double medium, double large)
+            {
+                Small = small;
+                Medium = medium;
+                Large = large;
+            }
+
+        }
+    }
+

@@ -2,6 +2,7 @@
 using MongoDB.Bson.Serialization.Attributes;
 namespace Rebar.Models
 {
+    [BsonIgnoreExtraElements]
     public class DiscountsAndPromotions
     {
         [BsonId]
@@ -13,5 +14,6 @@ namespace Rebar.Models
 
         [BsonElement("discountPercentage")]
         public double DiscountPercentage { get; set; }
+    
     }
 }
