@@ -8,8 +8,9 @@ namespace Rebar.Models
     public class Shake
     {
         [BsonId]
-        [BsonRepresentation(BsonType.String)]
-        public Guid Id { get; set; }
+       // [BsonRepresentation(BsonType.String)]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string Id { get; set; }
 
         [BsonElement("name")]
         public string Name { get; set; }

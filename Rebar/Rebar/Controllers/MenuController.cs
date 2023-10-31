@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Rebar.Models;
+using Rebar.Services;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,36 +10,56 @@ namespace Rebar.Controllers
     [ApiController]
     public class MenuController : ControllerBase
     {
+        private readonly IMenuService _menuService;
+        public MenuController(IMenuService menuService)
+        {
+            this._menuService = menuService;
+        }
         // GET: api/<MenuController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public ActionResult<List<Shake>> Get()
         {
-            return new string[] { "value1", "value2" };
+            return _menuService.GetShakes();
         }
 
         // GET api/<MenuController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public ActionResult<Shake> Get(string id)
         {
-            return "value";
+           var shake= _menuService.GetShakeById(id);
+            if(shake == null) { NotFound($"Shake with Id={id} not found"); }
+            return shake;
         }
 
         // POST api/<MenuController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public ActionResult<Shake> Post([FromBody] Shake shake)
         {
+            _menuService.Create(shake);
+            return CreatedAtAction(nameof(Get), new { id = shake.Id }, shake);
         }
 
         // PUT api/<MenuController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public ActionResult Put(string id, [FromBody] Shake shake)
         {
+            var existingShake = _menuService.GetShakeById(id);
+            if (existingShake == null)
+            {
+                return NotFound($"Shake with Id={id} not found");
+            }
+            _menuService.Update(id, shake);
+            return NoContent();
         }
 
         // DELETE api/<MenuController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public ActionResult Delete(string id)
         {
+            var shake=_menuService.GetShakeById(id);
+            if(shake == null) { NotFound($"Shake with Id={id} not found"); }
+            _menuService.Delete(shake.Id);
+            return Ok($"Shake with Id ={id} deleted");
         }
     }
 }

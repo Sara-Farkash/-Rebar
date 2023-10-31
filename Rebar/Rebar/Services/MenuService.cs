@@ -19,13 +19,13 @@ namespace Rebar.Services
             return shake;
         }
 
-        public void Delete(Guid id)
+        public void Delete(string id)
         {
            _shake.DeleteOne(shake => shake.Id == id);
 
         }
 
-        public Shake GetShakeById(Guid id)
+        public Shake GetShakeById(string id)
         {
             return _shake.Find(shake => shake.Id == id).FirstOrDefault();
 
@@ -37,7 +37,7 @@ namespace Rebar.Services
 
         }
 
-        public void Update(Guid id, Shake shake)
+        public void Update(string id, Shake shake)
         {
             _shake.ReplaceOne(shake => shake.Id == id,shake);
         }

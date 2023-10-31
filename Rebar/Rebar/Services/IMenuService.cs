@@ -5,9 +5,9 @@ namespace Rebar.Services
     public interface IMenuService
     {
         List<Shake> GetShakes();
-        Shake GetShakeById(Guid id);
+        Shake GetShakeById(string id);
         Shake Create(Shake shake);
-        void Update(Guid id,Shake shake);
-        void Delete(Guid id);
+        void Update(string id,Shake shake);
+        void Delete(string id);
     }
 }

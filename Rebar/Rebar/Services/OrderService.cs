@@ -22,9 +22,14 @@ namespace Rebar.Services
             return shake;
         }
 
-        public void DeleteShake(Guid id)
+        public void DeleteShake(string id)
         {
             _shake.DeleteOne(shake => shake.Id == id);
+        }
+
+        public void DeleteShake(Guid id)
+        {
+            throw new NotImplementedException();
         }
 
         //public DiscountsAndPromotions GetDiscountsAndPromotions()
@@ -32,9 +37,14 @@ namespace Rebar.Services
         // //   return _.Find(shakes => true).ToList();
         //}
 
-        public Shake GetShakeById(Guid shakeId)
+        public Shake GetShakeById(string shakeId)
         {
             return _shake.Find(shake => shake.Id == shakeId).FirstOrDefault();
+        }
+
+        public Shake GetShakeById(Guid shakeId)
+        {
+            throw new NotImplementedException();
         }
 
         public List<Shake> GetShakes()
