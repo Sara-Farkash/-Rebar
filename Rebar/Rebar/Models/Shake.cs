@@ -1,6 +1,11 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using System;
+using System.Text.Json.Serialization;
+
+
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 public enum priceForSizeEnum
 {
     Large=32,
@@ -25,6 +30,8 @@ namespace Rebar.Models
         public string Description { get; set; }
 
         [BsonElement("priceForSize")]
+        //[JsonConverter(typeof(StringEnumConverter))]  // JSON.Net
+        [BsonRepresentation(BsonType.String)]
         public priceForSizeEnum PriceForSize { get; set; }
     }
     }
