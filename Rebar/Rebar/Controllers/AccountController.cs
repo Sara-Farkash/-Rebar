@@ -36,9 +36,9 @@ namespace Rebar.Controllers
         [HttpPost]
         public ActionResult<Order> Post([FromBody] Order order)
         {
-            //לפני שאנחנו מוסיפים את ההזמנה נבדוק אם אפשר להוסיף מבחנת תקינות קלט
-            if (!validation(order).Equals("true"))
-                return BadRequest(validation(order));
+            ////לפני שאנחנו מוסיפים את ההזמנה נבדוק אם אפשר להוסיף מבחנת תקינות קלט
+            //if (!validation(order).Equals("true"))
+            //    return BadRequest(validation(order));
 
             _accountService.CreateOrder(order);
             return CreatedAtAction(nameof(Get),new { id=order.Id },order);
@@ -48,8 +48,8 @@ namespace Rebar.Controllers
         [HttpPut("{id}")]
         public ActionResult Put(string id, [FromBody] Order order)
         {
-            if (!validation(order).Equals("true"))
-                return BadRequest(validation(order));
+            //if (!validation(order).Equals("true"))
+            //    return BadRequest(validation(order));
 
             var existingOrder = _accountService.GetOrderById(id);
             if (existingOrder == null)
@@ -70,28 +70,28 @@ namespace Rebar.Controllers
             return Ok($"order with Id ={id} deleted");
         }
 
-        public string validation(Order order)
-        {
-            if (string.IsNullOrEmpty(order.NameCustomer))
-            {
-                return "NameCustomer must not be empty.";
-            }
+        //public string validation(Order order)
+        //{
+        //    if (string.IsNullOrEmpty(order.NameCustomer))
+        //    {
+        //        return "NameCustomer must not be empty.";
+        //    }
 
-            if (!DateTime.TryParse(order.DateOrder.ToString(), out _))
-            {
-                return "Invalid DateOrder format.";
-            }
-            if (!Enum.IsDefined(typeof(DiscountsAndPromotions), order.DiscountsAndPromotionsForPerson))
-            {
-                return "Invalid DiscountsAndPromotionsForPerson value.";
-            }
-            if (order.ListShakes == null || order.ListShakes.Count == 0)
-            {
-                return "At least one Shake must be in the list.";
-            }
+        //    if (!DateTime.TryParse(order.DateOrder.ToString(), out _))
+        //    {
+        //        return "Invalid DateOrder format.";
+        //    }
+        //    if (!Enum.IsDefined(typeof(DiscountsAndPromotions), order.DiscountsAndPromotionsForPerson))
+        //    {
+        //        return "Invalid DiscountsAndPromotionsForPerson value.";
+        //    }
+        //    if (order.ListShakes == null || order.ListShakes.Count == 0)
+        //    {
+        //        return "At least one Shake must be in the list.";
+        //    }
 
-            return "true";
-        }
+        //    return "true";
+        //}
 
 
     }
