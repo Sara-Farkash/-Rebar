@@ -7,8 +7,8 @@ namespace Rebar.Services
     {
 
         private readonly IMongoCollection<Shake> _shake;
-        //פה נעשה 2 סוגיפ של גם שייק וגם הנחות ומבצעים
-        //private readonly 
+        private readonly IMongoCollection<Order> _order;
+
 
         public OrderService(IRebarStoreDatabaseSettings settings, IMongoClient mongoClient)
         {
@@ -18,6 +18,7 @@ namespace Rebar.Services
 
         public Shake CreateShakeInOrder(Shake shake)
         {
+           
            _shake.InsertOne(shake);
             return shake;
         }
@@ -26,12 +27,6 @@ namespace Rebar.Services
         {
             _shake.DeleteOne(shake => shake.Id == id);
         }
-
-
-        //public DiscountsAndPromotions GetDiscountsAndPromotions()
-        //{
-        // //   return _.Find(shakes => true).ToList();
-        //}
 
         public Shake GetShakeById(string shakeId)
         {

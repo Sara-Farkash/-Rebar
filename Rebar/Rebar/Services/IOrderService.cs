@@ -5,14 +5,15 @@ namespace Rebar.Services
     public interface IOrderService
     {
 
-
-        //DiscountsAndPromotions GetDiscountsAndPromotions();
-
-      //  DiscountsAndPromotions CreateDiscountsAndPromotions(DiscountsAndPromotions discountsAndPromotions);
+        //מחזיר את כל השייקים שהוזמנו
         List<Shake> GetShakes();
-        Shake GetShakeById(string shakeId);
+        //מקבל שייק להזמין  
         Shake CreateShakeInOrder(Shake shake);
+       //מוחק שייק מתוך ההזמנה
         void DeleteShake(string id);
+        //מעדכן שייק בהזמנה
         void UpdateOrderShake(string id,Shake shake);
+
+        Shake GetShakeById(string shakeId);
     }
 }

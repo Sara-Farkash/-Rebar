@@ -4,13 +4,12 @@ namespace Rebar.Services
 {
     public class MenuService : IMenuService
     {
-        //private readonly IMongoCollection<Menu> _menus;
+      
         private readonly IMongoCollection<Shake>_shake;
 
         public MenuService(IRebarStoreDatabaseSettings settings, IMongoClient mongoClient)
         {
           var database= mongoClient.GetDatabase(settings.DatabaseName);
-            //_menus=  database.GetCollection<Menu>(settings.MenuCollectionName);
             _shake = database.GetCollection<Shake>(settings.MenuCollectionName);
         }
         public Shake Create(Shake shake)

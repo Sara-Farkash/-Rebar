@@ -30,11 +30,13 @@ namespace Rebar.Models
         [BsonElement("listOfDiscountsAndPromotions")]
         public DiscountsAndPromotions DiscountsAndPromotionsForPerson { get; set; }
 
-        [BsonElement("sumPriceShakeInList")]
-        public double SumPriceShakeInList { get; set; }
+        public bool IsHaveCoupon { get; set; }
 
         [BsonElement("listShakes")]
         public List<Shake> ListShakes { get; set; }
+
+        [BsonElement("totalPrice")]
+        public double TotalPrice { get; set; }
         //enum
         //אפשר למחוק את המחלקה עצמה ולעשות אינם להחזיר אותו לטבלה כמחרוזת
     }

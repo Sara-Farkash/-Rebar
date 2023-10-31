@@ -22,7 +22,7 @@ namespace Rebar.Controllers
             return _orderService.GetShakes();
         }
 
-        // GET api/<OrderController>/5
+        //GET api/<OrderController>/5
         [HttpGet("{id}")]
         public ActionResult<Shake> Get(string id)
         {
@@ -35,6 +35,14 @@ namespace Rebar.Controllers
         [HttpPost]
         public ActionResult<Shake> Post([FromBody] Shake shake)
         {
+            if (shake == null) 
+            {             
+                return NotFound($"Shake with Id={shake.Id} not found"); 
+            }
+            if (string.IsNullOrEmpty(shake.Name))
+            {
+                return BadRequest("Name must not be empty.");
+            }
             _orderService.CreateShakeInOrder(shake);
             return CreatedAtAction(nameof(Get), new { id = shake.Id }, shake);
         }
@@ -47,6 +55,14 @@ namespace Rebar.Controllers
             if (existingShake == null)
             {
                 return NotFound($"Shake with Id={id} not found");
+            }
+            if (shake == null)
+            {
+                return NotFound($"Shake with Id={shake.Id} not found");
+            }
+            if (string.IsNullOrEmpty(shake.Name))
+            {
+                return BadRequest("Name must not be empty.");
             }
             _orderService.UpdateOrderShake(id, shake);
             return NoContent();
@@ -61,5 +77,6 @@ namespace Rebar.Controllers
             _orderService.DeleteShake(shake.Id);
             return Ok($"Shake with Id ={id} deleted");
         }
+
     }
 }
