@@ -17,8 +17,9 @@ namespace Rebar.Models
     public class Order
     {
         [BsonId]
-        [BsonRepresentation(BsonType.String)]
-        public Guid Id { get; set; }
+        // [BsonRepresentation(BsonType.String)]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public String Id { get; set; }
 
         [BsonElement("nameCustomer")]
         public string NameCustomer { get; set; }

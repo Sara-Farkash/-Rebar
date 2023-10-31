@@ -17,7 +17,7 @@ namespace Rebar.Services
             return order;
         }
 
-        public void DeleteOrder(Guid id)
+        public void DeleteOrder(string id)
         {
             _orders.DeleteOne(order => order.Id == id);
           
@@ -28,13 +28,13 @@ namespace Rebar.Services
             return _orders.Find(orders => true).ToList();
         }
 
-        public Order GetOrderById(Guid id)
+        public Order GetOrderById(string id)
         {
             return _orders.Find(order => order.Id == id).FirstOrDefault();
 
         }
 
-        public void Update(Guid id, Order order)
+        public void Update(string id, Order order)
         {
             _orders.ReplaceOne(order => order.Id == id, order);
 

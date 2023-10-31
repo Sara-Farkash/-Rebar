@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Rebar.Models;
+using Rebar.Services;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,36 +10,56 @@ namespace Rebar.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
+        private readonly IAccountService _accountService;
+        public AccountController(IAccountService accountService)
+        {
+            this._accountService = accountService;  
+        }
         // GET: api/<AccountController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public ActionResult<List<Order>> Get()
         {
-            return new string[] { "value1", "value2" };
+            return _accountService.GetAllOrders();
         }
 
         // GET api/<AccountController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public ActionResult<Order> Get(string id)
         {
-            return "value";
+            var order = _accountService.GetOrderById(id);
+            if (order == null) { NotFound($"Order with Id={id} not found"); }
+            return order;
         }
 
         // POST api/<AccountController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public ActionResult<Order> Post([FromBody] Order order)
         {
+            _accountService.CreateOrder(order);
+            return CreatedAtAction(nameof(Get),new { id=order.Id },order);
         }
 
         // PUT api/<AccountController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public ActionResult Put(string id, [FromBody] Order order)
         {
+            var existingOrder = _accountService.GetOrderById(id);
+            if (existingOrder == null)
+            {
+                return NotFound($"order with Id={id} not found");
+            }
+            _accountService.Update(id, order);
+            return NoContent();
         }
 
         // DELETE api/<AccountController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public ActionResult Delete(string id)
         {
+            var order = _accountService.GetOrderById(id);
+            if (order == null) { NotFound($"order with Id={id} not found"); }
+            _accountService.DeleteOrder(order.Id);
+            return Ok($"order with Id ={id} deleted");
         }
     }
 }

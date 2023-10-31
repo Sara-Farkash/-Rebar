@@ -5,10 +5,10 @@ namespace Rebar.Services
     public interface IAccountService
     {
         List <Order> GetAllOrders ();
-        Order GetOrderById(Guid id);
+        Order GetOrderById(string id);
         Order CreateOrder (Order order);
-        void Update (Guid id,Order order);
-        void DeleteOrder (Guid Id);
+        void Update (string id,Order order);
+        void DeleteOrder (string Id);
 
     }
 }

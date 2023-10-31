@@ -10,9 +10,9 @@ namespace Rebar.Services
 
       //  DiscountsAndPromotions CreateDiscountsAndPromotions(DiscountsAndPromotions discountsAndPromotions);
         List<Shake> GetShakes();
-        Shake GetShakeById(Guid shakeId);
+        Shake GetShakeById(string shakeId);
         Shake CreateShakeInOrder(Shake shake);
-        void DeleteShake(Guid id);
-        void UpdateOrderShake(Guid id,Shake shake);
+        void DeleteShake(string id);
+        void UpdateOrderShake(string id,Shake shake);
     }
 }
