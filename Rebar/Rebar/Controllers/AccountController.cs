@@ -21,27 +21,22 @@ namespace Rebar.Controllers
         {
             return _accountService.GetAllOrders();
         }
-
         // GET api/<AccountController>/5
         [HttpGet("{id}")]
         public ActionResult<Order> Get(string id)
         {
-
             var order = _accountService.GetOrderById(id);
             if (order == null) { NotFound($"Order with Id={id} not found"); }
             return order;
         }
-
         // POST api/<AccountController>
         [HttpPost]
         public ActionResult<Order> Post([FromBody] Order order)
         {
             Validation validation= new Validation();
-            ////לפני שאנחנו מוסיפים את ההזמנה נבדוק אם אפשר להוסיף מבחנת תקינות קלט
+            ////Before we add the order we will check if it is possible to add an input integrity test
             if (!validation.validationOrder(order).Equals("true"))
-                return BadRequest(validation.validationOrder(order));
-
-
+            return BadRequest(validation.validationOrder(order));
             _accountService.CreateOrder(order);
             return CreatedAtAction(nameof(Get),new { id=order.Id },order);
         }
@@ -51,10 +46,9 @@ namespace Rebar.Controllers
         public ActionResult Put(string id, [FromBody] Order order)
         {
             Validation validation = new Validation();
-            ////לפני שאנחנו מוסיפים את ההזמנה נבדוק אם אפשר להוסיף מבחנת תקינות קלט
+            ////Before we add the order we will check if it is possible to add an input integrity test
             if (!validation.validationOrder(order).Equals("true"))
-                return BadRequest(validation.validationOrder(order));
-
+            return BadRequest(validation.validationOrder(order));
             var existingOrder = _accountService.GetOrderById(id);
             if (existingOrder == null)
             {
@@ -72,10 +66,7 @@ namespace Rebar.Controllers
             if (order == null) { NotFound($"order with Id={id} not found"); }
             _accountService.DeleteOrder(order.Id);
             return Ok($"order with Id ={id} deleted");
-        }
-
-       
-
+        }      
 
     }
 }

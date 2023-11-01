@@ -1,4 +1,5 @@
 ﻿using Rebar.Models;
+using System.Text.RegularExpressions;
 
 namespace Rebar.Controllers
 {
@@ -24,16 +25,20 @@ namespace Rebar.Controllers
             {
                 return "At least one Shake must be in the list.";
             }
+            if (order.ListShakes.Count > 10)
+                return $"the number order {order.Id} Exceeded the amount of shakes that can be ordered!";
+
+            string pattern = "^[A-Za-z]+$";
+            if (!Regex.IsMatch(order.NameCustomer, pattern))
+               return $"the number order {order.Id} Customer name does not exist Invalid order!";
+            if (order.ListShakes.Count <= 0)
+                return $"the number order {order.Id} The customer did not select any shakes";
 
             return "true";
         }
 
         public string validationShake(Shake shake)
         {
-            //if (_menuService.GetShakes() == null || _menuService.GetShakes().Count == 0)
-            //{
-            //    return "The ShakesList must not be empty.";
-            //}
             if (string.IsNullOrEmpty(shake.Name))
             {
                 return "Name must not be empty.";

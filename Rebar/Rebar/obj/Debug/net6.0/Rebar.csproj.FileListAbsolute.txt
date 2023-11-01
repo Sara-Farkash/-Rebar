@@ -43,3 +43,4 @@ C:\Users\פרקש\Desktop\הדסים\Week 4\Rebar_Git\-Rebar\Rebar\Rebar\obj\Deb
 C:\Users\פרקש\Desktop\הדסים\Week 4\Rebar_Git\-Rebar\Rebar\Rebar\obj\Debug\net6.0\Rebar.pdb
 C:\Users\פרקש\Desktop\הדסים\Week 4\Rebar_Git\-Rebar\Rebar\Rebar\obj\Debug\net6.0\Rebar.genruntimeconfig.cache
 C:\Users\פרקש\Desktop\הדסים\Week 4\Rebar_Git\-Rebar\Rebar\Rebar\obj\Debug\net6.0\ref\Rebar.dll
+C:\Users\פרקש\Desktop\הדסים\Week 4\Rebar_Git\-Rebar\Rebar\Rebar\bin\Debug\net6.0\Newtonsoft.Json.dll

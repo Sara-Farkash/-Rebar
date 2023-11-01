@@ -15,6 +15,7 @@ namespace Rebar.Controllers
         {
             this._menuService = menuService;
         }
+
         // GET: api/<MenuController>
         [HttpGet]
         public ActionResult<List<Shake>> Get()
@@ -36,9 +37,9 @@ namespace Rebar.Controllers
         public ActionResult<Shake> Post([FromBody] Shake shake)
         {
             Validation validation = new Validation();
-            ////לפני שאנחנו מוסיפים את ההזמנה נבדוק אם אפשר להוסיף מבחנת תקינות קלט
+            ////Before we add the order we will check if it is possible to add an input integrity test
             if (!validation.validationShake(shake).Equals("true"))
-                return BadRequest(validation.validationShake(shake));
+            return BadRequest(validation.validationShake(shake));
             _menuService.Create(shake);
             return CreatedAtAction(nameof(Get), new { id = shake.Id }, shake);
         }
@@ -47,16 +48,15 @@ namespace Rebar.Controllers
         [HttpPut("{id}")]
         public ActionResult Put(string id, [FromBody] Shake shake)
         {
-
             var existingShake = _menuService.GetShakeById(id);
             if (existingShake == null)
             {
                 return NotFound($"Shake with Id={id} not found");
             }
             Validation validation = new Validation();
-            ////לפני שאנחנו מוסיפים את ההזמנה נבדוק אם אפשר להוסיף מבחנת תקינות קלט
+            ////Before we add the order we will check if it is possible to add an input integrity test
             if (!validation.validationShake(shake).Equals("true"))
-                return BadRequest(validation.validationShake(shake));
+            return BadRequest(validation.validationShake(shake));
             _menuService.Update(id, shake);
             return NoContent();
         }

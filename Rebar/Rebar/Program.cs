@@ -15,7 +15,7 @@ new MongoClient(builder.Configuration.GetValue<string>(
   "RebarStoreDatabaseSettings:ConnectionString")));
 builder.Services.AddScoped<IAccountService,AccountService>();
 builder.Services.AddScoped<IMenuService,MenuService>();
-builder.Services.AddScoped<IOrderService,OrderService>();
+builder.Services.AddScoped<IDatabaseOfBranchService,DatabaseOfBranchService>();
 
 
 

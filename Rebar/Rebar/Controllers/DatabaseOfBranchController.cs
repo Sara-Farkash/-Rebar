@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Rebar.Models;
 using Rebar.Services;
+using System.Runtime.InteropServices;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -19,7 +20,7 @@ namespace Rebar.Controllers
         [HttpGet]
         public ActionResult<List<Account>> Get()
         {
-            //לפני שמחזירים את הכל בודקים האם זה מנהל
+            //Before returning everything, check if it's a manager
             Console.WriteLine("write the passpord");
             string pws = Console.ReadLine();
             if (!pws.Equals("43wjerfpgjf340p9u"))
@@ -27,23 +28,14 @@ namespace Rebar.Controllers
             return databaseOfBranchService.GetAccounts();
         }
 
-        // GET api/<DatabaseOfBranchController>/5
-        //[HttpGet("{id}")]
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
-
-        // POST api/<DatabaseOfBranchController>
-
         [HttpPost]
         public ActionResult<Account> Post([FromBody] Account account)
         {
+            //Only an manager can close a checkout, so we will check if it is an manager!!
             Console.WriteLine("write the passpord");
             string pws=Console.ReadLine();
             if(!pws.Equals("43wjerfpgjf340p9u")) 
                 return BadRequest("wrong password");
-            //לפני שיוצרים חשבון בודקים האם הכל בסדר
             databaseOfBranchService.Create(account);
             return CreatedAtAction(nameof(Get), new { id = account.Id }, account);
         }      
