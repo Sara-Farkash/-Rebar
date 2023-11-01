@@ -7,43 +7,31 @@ namespace Rebar.Services
     public class AccountService : IAccountService
     {
         private readonly IMongoCollection<Order> _orders;
+        private readonly IMongoCollection<Menu> _menu;
         public AccountService(IRebarStoreDatabaseSettings settings,IMongoClient mongoClient)
         {
             var database=mongoClient.GetDatabase(settings.DatabaseName);
             _orders = database.GetCollection<Order>(settings.AccountCollectionName);
+            _menu= database.GetCollection<Menu>(settings.AccountCollectionName);
         }
-        //לפני שיצרנו הזמנה 
-        //אנחנו בודקים 3 דברים:
-        //1.האם כמות השייקים שלנו עומדת מעל 10 
-        //2. האם שם הלקוח תקין
-        //3.האם יש בכלל שייקים מוזמנים בהזמנה
+  
         public Order CreateOrder(Order order)
-        {
-            //אין לנו קאצ איפה כדאי ואיך לזרוק שגיאה?
-            if (order.ListShakes.Count > 10)
-                throw new Exception($"the number order {order.Id} Exceeded the amount of shakes that can be ordered!");
-
-            string pattern = "^[A-Za-z]+$";
-            if(!Regex.IsMatch(order.NameCustomer, pattern))
-                throw new Exception($"the number order {order.Id} Customer name does not exist Invalid order!");
-            if (order.ListShakes.Count <= 0)
-                throw new Exception($"the number order {order.Id} The customer did not select any shakes");
-            else
-            {
+        {                 
                 foreach (var shakes in order.ListShakes)
-                {
-                    //השאלה אם הוא יודע אם זה הערך של מחיר ולא גודל
+                {                  
                    order.TotalPrice += (double)shakes.PriceForSize;
                 }
-                if(order.IsHaveCoupon)
+                if (order.IsHaveCoupon)
                 {
-                    //איך עושים הנחה של אחוזים??
-                    // order.TotalPrice = order.TotalPrice * order.DiscountsAndPromotionsForPerson;
+                    if (Enum.IsDefined(typeof(DiscountsAndPromotions), order.DiscountsAndPromotionsForPerson))
+                    {                       
+                        order.TotalPrice = CouponCodeCalculation(order);
+                    }
                 }
+                
                 _orders.InsertOne(order);
                 Console.WriteLine($"order numner: {order.Id} is save and the total price: {order.TotalPrice}");
-                return order;
-            }
+                return order;        
         }
 
         public void DeleteOrder(string id)
@@ -63,10 +51,51 @@ namespace Rebar.Services
 
         }
 
-        public void Update(string id, Order order)
+        public void Update(string id, Order updatedOrder)
         {
-            _orders.ReplaceOne(order => order.Id == id, order);
+            Order existingOrder = GetOrderById(id);
 
+            existingOrder.NameCustomer = updatedOrder.NameCustomer;
+            existingOrder.DateOrder = updatedOrder.DateOrder;
+            existingOrder.DiscountsAndPromotionsForPerson = updatedOrder.DiscountsAndPromotionsForPerson;
+            existingOrder.IsHaveCoupon = updatedOrder.IsHaveCoupon;
+            existingOrder.ListShakes = updatedOrder.ListShakes;
+            double newTotalPrice = 0;
+            foreach (var shake in updatedOrder.ListShakes)
+            {
+                newTotalPrice = newTotalPrice + (double)shake.PriceForSize;
+            }
+
+            existingOrder.TotalPrice = newTotalPrice;
+            if (updatedOrder.IsHaveCoupon)
+            { 
+                existingOrder.TotalPrice = CouponCodeCalculation(existingOrder);
+            }                                    
+            // Save the updated order back to the database
+            _orders.ReplaceOne(o => o.Id == id, existingOrder);
         }
+
+        public double CouponCodeCalculation(Order order)
+        {          
+            DiscountsAndPromotions discountType = order.DiscountsAndPromotionsForPerson;
+            double discountPercentage = (int)discountType;
+            discountPercentage /= 100.0;
+            double discountAmount = order.TotalPrice * discountPercentage;
+            order.TotalPrice -= discountAmount;
+
+            return order.TotalPrice;
+        }
+        //public bool IsShakeExsistInMenu(Shake shake)
+        //{
+
+          
+        //    Shake shake1 = _menu.ShakesList.Find(shake => shake.Id == shake1.Id).FirstOrDefault();
+        //    if (shake1 != null)
+        //    {
+        //        return true;
+
+        //    }
+        //    return false;
+        //}
     }
 }

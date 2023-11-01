@@ -3,10 +3,8 @@ using MongoDB.Driver;
 namespace Rebar.Services
 {
     public class MenuService : IMenuService
-    {
-      
+    {     
         private readonly IMongoCollection<Shake>_shake;
-
         public MenuService(IRebarStoreDatabaseSettings settings, IMongoClient mongoClient)
         {
           var database= mongoClient.GetDatabase(settings.DatabaseName);
@@ -21,24 +19,23 @@ namespace Rebar.Services
         public void Delete(string id)
         {
            _shake.DeleteOne(shake => shake.Id == id);
-
         }
 
         public Shake GetShakeById(string id)
         {
             return _shake.Find(shake => shake.Id == id).FirstOrDefault();
-
         }
 
         public List<Shake> GetShakes()
         {
           return  _shake.Find(shakes =>true).ToList();
-
         }
 
         public void Update(string id, Shake shake)
         {
             _shake.ReplaceOne(shake => shake.Id == id,shake);
         }
+
+
     }
 }
