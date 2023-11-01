@@ -4,9 +4,9 @@ Simulation - ASP.NET Core Web Application This is a C# project developed in ASP.
 Models, Services, Controllers and Swagger for API documentation.
 The project simulates Shake shop -Rebar.
 with 3 tables:
-- Menu
+- **Menu**
   This class contains the menu of the shakes that are in the store
-- Account
+- **Account**
 When the customer has looked at the shake menu and wants to decide to buy a shake, he goes to the Account,
 There he will have to enter details of the customer as well as the choice of the shake and the price he chose for the size of the shake.
 (The price in our store for each size has a fixed price)
@@ -14,7 +14,7 @@ And the customer will have to say what price he chose and we will bring him the 
 Soldiers and teachers or students,
 we have a a lot of coupons for you at the cash register,
 please let us know if you have a coupon and if so, the coupon code and we will arrange an equal discount for you!!!
-- DatabaseOfBranch
+- **DatabaseOfBranch**
 This is the class reserved for the manager,
 Only he can enter it by entering a password in the console
 There he can close the daily account
