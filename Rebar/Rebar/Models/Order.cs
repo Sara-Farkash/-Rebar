@@ -16,7 +16,6 @@ namespace Rebar.Models
     [BsonIgnoreExtraElements]
     public class Order
     {
-
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public String Id { get; set; }
@@ -37,12 +36,5 @@ namespace Rebar.Models
 
         [BsonElement("totalPrice")]
         public double TotalPrice { get; set; }
-        //enum
-        //אפשר למחוק את המחלקה עצמה ולעשות אינם להחזיר אותו לטבלה כמחרוזת
-
-        //public Order()
-        //{
-        //    Id = Guid.NewGuid().ToString();
-        //}
     }
 }

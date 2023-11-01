@@ -17,7 +17,6 @@ namespace Rebar.Models
     [BsonIgnoreExtraElements]
     public class Shake
     {
-
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
@@ -29,17 +28,10 @@ namespace Rebar.Models
         public string Description { get; set; }
 
        
-        //[System.Text.Json.Serialization.JsonConverter(typeof(StringEnumConverter))]  // JSON.Net
         [BsonElement("priceForSize")]
-        [BsonRepresentation(BsonType.String)]         // Mongo
+        [BsonRepresentation(BsonType.String)]      
         public priceForSizeEnum? PriceForSize { get; set; }
-
-        //public Shake()
-        //{
-        //    Id= Guid.NewGuid().ToString();
-
-        //}
-
     }
-    }
+
+}
 

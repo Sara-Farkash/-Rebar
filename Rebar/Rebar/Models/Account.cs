@@ -5,8 +5,6 @@ namespace Rebar.Models
     [BsonIgnoreExtraElements]
     public class Account
     {
-
-
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
@@ -16,11 +14,5 @@ namespace Rebar.Models
 
         [BsonElement("listOrders")]
         public List<Order> ListOrders { get; set; }
-
-        //public Account()
-        //{
-        //    Id = Guid.NewGuid().ToString();
-        //}
-
     }
 }
