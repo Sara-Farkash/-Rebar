@@ -85,17 +85,5 @@ namespace Rebar.Services
 
             return order.TotalPrice;
         }
-        //public bool IsShakeExsistInMenu(Shake shake)
-        //{
-
-          
-        //    Shake shake1 = _menu.ShakesList.Find(shake => shake.Id == shake1.Id).FirstOrDefault();
-        //    if (shake1 != null)
-        //    {
-        //        return true;
-
-        //    }
-        //    return false;
-        //}
     }
 }
