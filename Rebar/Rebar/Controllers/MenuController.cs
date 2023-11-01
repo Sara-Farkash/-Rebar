@@ -35,8 +35,10 @@ namespace Rebar.Controllers
         [HttpPost]
         public ActionResult<Shake> Post([FromBody] Shake shake)
         {
-            //if (!validation(shake).Equals("true")) ;
-            //    return BadRequest(validation(shake));
+            Validation validation = new Validation();
+            ////לפני שאנחנו מוסיפים את ההזמנה נבדוק אם אפשר להוסיף מבחנת תקינות קלט
+            if (!validation.validationShake(shake).Equals("true"))
+                return BadRequest(validation.validationShake(shake));
             _menuService.Create(shake);
             return CreatedAtAction(nameof(Get), new { id = shake.Id }, shake);
         }
@@ -51,8 +53,10 @@ namespace Rebar.Controllers
             {
                 return NotFound($"Shake with Id={id} not found");
             }
-            //if (!validation(shake).Equals("true")) ;
-            //return BadRequest(validation(shake));
+            Validation validation = new Validation();
+            ////לפני שאנחנו מוסיפים את ההזמנה נבדוק אם אפשר להוסיף מבחנת תקינות קלט
+            if (!validation.validationShake(shake).Equals("true"))
+                return BadRequest(validation.validationShake(shake));
             _menuService.Update(id, shake);
             return NoContent();
         }
@@ -67,25 +71,6 @@ namespace Rebar.Controllers
             return Ok($"Shake with Id ={id} deleted");
         }
 
-        //public string validation(Shake shake)
-        //{
-        //    if (_menuService.GetShakes() == null || _menuService.GetShakes().Count == 0)
-        //    {
-        //        return "The ShakesList must not be empty.";
-        //    }
-        //    if (string.IsNullOrEmpty(shake.Name))
-        //    {
-        //        return "Name must not be empty.";
-        //    }
-        //    if (!Enum.IsDefined(typeof(priceForSizeEnum), shake.PriceForSize))
-        //    {
-        //        return "Invalid PriceForSize value.";
-        //    }
-        //    if (string.IsNullOrEmpty(shake.Description))
-        //    {
-        //        return "Description must not be empty.";
-        //    }
-        //    return "true";
-        //}
+     
     }
 }

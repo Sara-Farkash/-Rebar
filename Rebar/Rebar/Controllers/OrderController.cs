@@ -43,6 +43,7 @@ namespace Rebar.Controllers
             {
                 return BadRequest("Name must not be empty.");
             }
+
             _orderService.CreateShakeInOrder(shake);
             return CreatedAtAction(nameof(Get), new { id = shake.Id }, shake);
         }
