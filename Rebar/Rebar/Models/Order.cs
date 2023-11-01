@@ -16,8 +16,8 @@ namespace Rebar.Models
     [BsonIgnoreExtraElements]
     public class Order
     {
+
         [BsonId]
-        // [BsonRepresentation(BsonType.String)]
         [BsonRepresentation(BsonType.ObjectId)]
         public String Id { get; set; }
 
@@ -27,7 +27,7 @@ namespace Rebar.Models
         [BsonElement("dateOrder")]
         public DateTime DateOrder { get; set; }
 
-        [BsonElement("listOfDiscountsAndPromotions")]
+        [BsonElement("DiscountsAndPromotions")]
         public DiscountsAndPromotions DiscountsAndPromotionsForPerson { get; set; }
 
         public bool IsHaveCoupon { get; set; }
@@ -39,5 +39,10 @@ namespace Rebar.Models
         public double TotalPrice { get; set; }
         //enum
         //אפשר למחוק את המחלקה עצמה ולעשות אינם להחזיר אותו לטבלה כמחרוזת
+
+        //public Order()
+        //{
+        //    Id = Guid.NewGuid().ToString();
+        //}
     }
 }

@@ -5,15 +5,22 @@ namespace Rebar.Models
     [BsonIgnoreExtraElements]
     public class Account
     {
+
+
         [BsonId]
-        [BsonRepresentation(BsonType.String)]
-        public Guid Id { get; set; }
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string Id { get; set; }
 
         [BsonElement("lumpSum")]
         public double LumpSum { get; set; }
 
         [BsonElement("listOrders")]
         public List<Order> ListOrders { get; set; }
-    
+
+        //public Account()
+        //{
+        //    Id = Guid.NewGuid().ToString();
+        //}
+
     }
 }

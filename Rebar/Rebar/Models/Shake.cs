@@ -2,10 +2,9 @@
 using MongoDB.Bson.Serialization.Attributes;
 using System;
 using System.Text.Json.Serialization;
-
-
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+
 public enum priceForSizeEnum
 {
     Large=32,
@@ -18,8 +17,8 @@ namespace Rebar.Models
     [BsonIgnoreExtraElements]
     public class Shake
     {
+
         [BsonId]
-       // [BsonRepresentation(BsonType.String)]
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
 
@@ -29,10 +28,18 @@ namespace Rebar.Models
         [BsonElement("description")]
         public string Description { get; set; }
 
+       
+        //[System.Text.Json.Serialization.JsonConverter(typeof(StringEnumConverter))]  // JSON.Net
         [BsonElement("priceForSize")]
-        //[JsonConverter(typeof(StringEnumConverter))]  // JSON.Net
-        [BsonRepresentation(BsonType.String)]
-        public priceForSizeEnum PriceForSize { get; set; }
+        [BsonRepresentation(BsonType.String)]         // Mongo
+        public priceForSizeEnum? PriceForSize { get; set; }
+
+        //public Shake()
+        //{
+        //    Id= Guid.NewGuid().ToString();
+
+        //}
+
     }
     }
 
