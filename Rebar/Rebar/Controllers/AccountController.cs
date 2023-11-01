@@ -11,9 +11,12 @@ namespace Rebar.Controllers
     public class AccountController : ControllerBase
     {
         private readonly IAccountService _accountService;
-        public AccountController(IAccountService accountService)
+        private readonly IMenuService menuService;
+
+        public AccountController(IAccountService accountService, IMenuService menuService)
         {
             this._accountService = accountService;  
+            this.menuService = menuService;
         }
         // GET: api/<AccountController>
         [HttpGet]
@@ -37,6 +40,13 @@ namespace Rebar.Controllers
             ////Before we add the order we will check if it is possible to add an input integrity test
             if (!validation.validationOrder(order).Equals("true"))
             return BadRequest(validation.validationOrder(order));
+            foreach(Shake shake in order.ListShakes)
+            {
+                Shake shake1 = menuService.GetShakeById(shake.Id);
+                if(shake1==null){
+                    return BadRequest("This shake is not on the menu!!!");
+                }
+            }
             _accountService.CreateOrder(order);
             return CreatedAtAction(nameof(Get),new { id=order.Id },order);
         }
@@ -53,6 +63,14 @@ namespace Rebar.Controllers
             if (existingOrder == null)
             {
                 return NotFound($"order with Id={id} not found");
+            }
+            foreach (Shake shake in order.ListShakes)
+            {
+                Shake shake1 = menuService.GetShakeById(shake.Id);
+                if (shake1 == null)
+                {
+                    return BadRequest("This shake is not on the menu!!!");
+                }
             }
             _accountService.Update(id, order);
             return NoContent();
